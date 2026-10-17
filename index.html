@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050814">
+<title>AG TOOLS — Ultimate Tools Hub</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050814;--panel:#0c1224;--cyan:#00eaff;--blue:#4169ff;--purple:#a855f7;--text:#f4f7ff;--muted:#9aa7c5}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{padding:20px 16px;background:#080d1b;border-bottom:1px solid #172540;position:sticky;top:0;z-index:5}
+.brand{font-size:26px;font-weight:900;color:var(--cyan);letter-spacing:2px}
+.brand span{color:var(--purple)}
+header p{font-size:12px;color:var(--muted);margin-top:5px}
+.container{max-width:1000px;margin:auto;padding:18px}
+.hero{padding:24px 18px;border:1px solid #183b57;border-radius:20px;background:linear-gradient(135deg,#0b1830,#15102b);margin-bottom:20px}
+.hero h1{font-size:27px;line-height:1.3;margin-bottom:10px}
+.hero h1 span{color:var(--cyan)}
+.hero p{color:var(--muted);font-size:14px;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}
+.stat{background:#080d1b;padding:13px 5px;border:1px solid #202c48;border-radius:12px;text-align:center}
+.stat strong{display:block;color:var(--cyan);font-size:21px}
+.stat small{color:var(--muted);font-size:11px}
+.panel{background:var(--panel);border:1px solid #1b2945;border-radius:16px;padding:17px;margin-bottom:20px}
+h2{font-size:19px;margin-bottom:14px}
+input,button,select,textarea{font:inherit}
+input{width:100%;padding:13px;margin:6px 0;background:#060b18;border:1px solid #263653;border-radius:10px;color:white;outline:none}
+input:focus{border-color:var(--cyan)}
+button{padding:12px 15px;border:0;border-radius:10px;background:linear-gradient(100deg,var(--blue),var(--purple));color:white;font-weight:bold;cursor:pointer}
+button:active{transform:scale(.98)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
+.actions button{flex:1}
+.secondary{background:#151e35;border:1px solid #30415e}
+.notice{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
+.hidden{display:none!important}
+.account{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.pill{font-size:11px;border:1px solid var(--cyan);color:var(--cyan);padding:6px 9px;border-radius:20px}
+.search{margin-bottom:15px}
+.categories{display:flex;gap:8px;overflow:auto;margin-bottom:15px;padding-bottom:4px}
+.categories button{white-space:nowrap;padding:9px 13px}
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tool{background:#0a1020;border:1px solid #1c2b47;padding:14px;border-radius:14px;min-width:0}
+.tool .emoji{font-size:25px;margin-bottom:9px}
+.tool h3{font-size:14px;margin-bottom:7px}
+.tool p{font-size:11px;color:var(--muted);line-height:1.5;min-height:32px}
+.tool button{width:100%;margin-top:12px;padding:10px;font-size:12px}
+.lock{color:#ffcf70}
+.vipbox{background:linear-gradient(135deg,#19112b,#0c1830);border:1px solid #693eaa}
+.vipbox p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:13px}
+footer{text-align:center;color:#64718e;padding:25px 10px;font-size:11px}
+#output{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--cyan);font-size:13px;margin-top:12px}
+@media(min-width:650px){.tool-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero h1{font-size:36px}}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand">AG <span>TOOLS</span></div>
+  <p>YOUR ALL-IN-ONE DIGITAL TOOLS HUB</p>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>POWERFUL TOOLS.<br><span>ONE PLACE.</span></h1>
+    <p>দৈনন্দিন প্রয়োজনীয় ডিজিটাল টুলস ব্যবহার করুন সহজেই। Normal ব্যবহারকারীদের জন্য ২০টি ফ্রি টুল এবং VIP সদস্যদের জন্য ৫০+ টুলের পরিকল্পনা।</p>
+    <div class="stats">
+      <div class="stat"><strong>20</strong><small>FREE TOOLS</small></div>
+      <div class="stat"><strong>50+</strong><small>VIP TOOLS</small></div>
+      <div class="stat"><strong>30D</strong><small>VIP PLAN</small></div>
+    </div>
+  </section>
+
+  <section class="panel" id="auth">
+    <h2 id="authTitle">👤 Login / Create Account</h2>
+    <input id="email" type="email" placeholder="Email address" autocomplete="email">
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+    <div class="actions">
+      <button onclick="accountAction('login')">LOGIN</button>
+      <button class="secondary" onclick="accountAction('register')">CREATE ACCOUNT</button>
+    </div>
+    <p class="notice">এই HTML সংস্করণে অ্যাকাউন্টের ফর্মটি শুধু UI। নিরাপদ Login/Register চালাতে সার্ভার ব্যাকএন্ড যুক্ত করতে হবে।</p>
+  </section>
+
+  <section class="panel hidden" id="dashboard">
+    <div class="account">
+      <div><h2>👋 My Dashboard</h2><p id="userEmail" class="notice"></p></div>
+      <span class="pill" id="userRole">NORMAL</span>
+    </div>
+    <p class="notice">VIP মেয়াদ ও অ্যাকাউন্টের অবস্থা বাস্তব সার্ভার থেকে যাচাই করতে হবে।</p>
+    <div class="actions">
+      <button onclick="showVip()">👑 VIP ACCESS</button>
+      <button class="secondary" onclick="logout()">LOGOUT</button>
+    </div>
+  </section>
+
+  <section class="panel vipbox hidden" id="vipPanel">
+    <h2>👑 AG VIP MEMBERSHIP</h2>
+    <p>VIP পরিকল্পনা: ৩০ দিন · প্রস্তাবিত মূল্য ৳১৯৯। পেমেন্ট যাচাই ও সার্ভার থেকে অনুমোদন ছাড়া VIP সক্রিয় হবে না।</p>
+    <button onclick="alert('VIP চালু করতে নিরাপদ Backend এবং যাচাইকৃত পেমেন্ট ব্যবস্থা প্রয়োজন।')">REQUEST VIP ACCESS</button>
+  </section>
+
+  <section class="panel">
+    <h2>🧰 Explore Tools</h2>
+    <input class="search" id="search" placeholder="🔎 Search tools..." oninput="renderTools()">
+    <div class="categories">
+      <button onclick="setFilter('ALL')">ALL</button>
+      <button class="secondary" onclick="setFilter('FREE')">FREE</button>
+      <button class="secondary" onclick="setFilter('VIP')">👑 VIP</button>
+    </div>
+    <div class="tool-grid" id="tools"></div>
+    <div id="output"></div>
+  </section>
+
+  <footer>AG TOOLS © 2026 · Built for creators</footer>
+</main>
+
+<script>
+const freeTools = [
+["🔢","Calculator","সাধারণ হিসাব","calc"],
+["📝","Word Counter","শব্দ ও অক্ষর গণনা","words"],
+["🔐","Password Generator","নিরাপদ পাসওয়ার্ড তৈরি","password"],
+["🎨","Color Generator","রঙের HEX কোড","color"],
+["✍️","Text Designer","টেক্সট স্টাইল","text"],
+["📋","Text Case Converter","বড়/ছোট হাতের অক্ষর","case"],
+["🔗","URL Encoder","URL encode/decode","url"],
+["🔤","Base64 Converter","Base64 encode/decode","base64"],
+["⏱️","Timer","কাউন্টডাউন টাইমার","timer"],
+["📅","Date & Time","বর্তমান তারিখ ও সময়","date"],
+["🔠","Character Counter","অক্ষর গণনা","chars"],
+["📏","Length Converter","দৈর্ঘ্য রূপান্তর","length"],
+["⚖️","Weight Converter","ওজন রূপান্তর","weight"],
+["🌡️","Temperature Converter","তাপমাত্রা রূপান্তর","temp"],
+["💱","Percentage Calculator","শতকরা হিসাব","percent"],
+["📄","JSON Formatter","JSON ফরম্যাট যাচাই","json"],
+["🔍","Text Finder","লেখার মধ্যে খোঁজ","find"],
+["🔊","Text to Speech","লেখা পড়ে শোনানো","speech"],
+["📷","QR Code","QR কোড জেনারেটর","qr"],
+["🖼️","Image Preview","ছবি দেখুন","image"]
+];
+
+const vipNames = [
+["🤖","AI Text Assistant"],["📚","AI Story Writer"],
+["🎬","Video Title Generator"],["#️⃣","Hashtag Generator"],
+["📢","YouTube Description Maker"],["🧠","AI Idea Generator"],
+["🎮","Gaming Name Generator"],["⚔️","Anime Name Generator"],
+["🎭","Character Bio Maker"],["🖼️","Image Compressor"],
+["📐","Image Resizer"],["✂️","Image Cropper"],
+["🎨","Gradient Generator"],["💠","Logo Ideas"],
+["📱","Social Bio Generator"],["📆","Content Planner"],
+["🔗","QR Scanner"],["📊","Data Converter"],
+["🧮","Scientific Calculator"],["💰","Budget Planner"],
+["📈","Profit Calculator"],["💵","Currency Calculator"],
+["🔡","Slug Generator"],["🧹","Text Cleaner"],
+["🔀","Text Reverser"],["🔢","Number Converter"],
+["🕒","Time Zone Helper"],["📏","Aspect Ratio Calculator"],
+["🗜️","File Size Converter"],["🧾","Invoice Maker"],
+["📃","Resume Builder"],["✉️","Email Template Maker"],
+["🗒️","Notes Organizer"]
+];
+
+let filter = "ALL";
+let currentUser = null;
+
+function setFilter(value){
+  filter = value;
+  renderTools();
+}
+
+function renderTools(){
+  const query = document.getElementById("search").value.toLowerCase();
+  const list = [
+    ...freeTools.map(t=>({...{emoji:t[0],name:t[1],desc:t[2],id:t[3]},type:"FREE"})),
+    ...vipNames.map((t,i)=>({emoji:t[0],name:t[1],desc:"VIP সদস্যদের জন্য পরিকল্পিত টুল",id:"vip"+i,type:"VIP"}))
+  ];
+  const filtered = list.filter(t=>
+    (filter==="ALL" || filter===t.type) &&
+    (t.name.toLowerCase().includes(query) || t.desc.toLowerCase().includes(query))
+  );
+
+  document.getElementById("tools").innerHTML = filtered.map(t=>`
+    <article class="tool">
+      <div class="emoji">${t.emoji}</div>
+      <h3>${escapeHTML(t.name)}</h3>
+      <p>${escapeHTML(t.desc)}</p>
+      <button class="${t.type==="VIP"?"secondary":""}" onclick="openTool('${t.id}')">
+        ${t.type==="VIP"?"🔒 VIP LOCK":"OPEN TOOL"}
+      </button>
+    </article>
+  `).join("");
+}
+
+function escapeHTML(s){
+  return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function accountAction(action){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  if(!email || !password){
+    alert("Email এবং Password লিখুন।");
+    return;
+  }
+  alert("এই HTML-only সংস্করণে "+action.toUpperCase()+" ফর্ম দেখানো হয়েছে। বাস্তব অ্যাকাউন্টের জন্য Backend প্রয়োজন।");
+}
+
+function showVip(){
+  document.getElementById("vipPanel").classList.toggle("hidden");
+}
+
+function logout(){
+  currentUser = null;
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("auth").classList.remove("hidden");
+}
+
+function openTool(id){
+  if(id.startsWith("vip")){
+    alert("🔒 VIP LOCKED\nVIP টুলের নিরাপদ অ্যাক্সেস সার্ভার থেকে যাচাই করতে হবে।");
+    return;
+  }
+
+  const output = document.getElementById("output");
+  const ask = (title,placeholder="")=>prompt(title,placeholder);
+  let result = "";
+
+  switch(id){
+    case "words":{
+      const s=ask("আপনার লেখা লিখুন:");
+      if(s===null)return;
+      result=`Words: ${s.trim()?s.trim().split(/\s+/).length:0}\nCharacters: ${s.length}\nCharacters without spaces: ${s.replace(/\s/g,"").length}`;
+      break;
+    }
+    case "chars":{
+      const s=ask("লেখা লিখুন:");
+      if(s===null)return;
+      result=`মোট অক্ষর: ${s.length}\nস্পেস বাদে: ${s.replace(/\s/g,"").length}`;
+      break;
+    }
+    case "password":{
+      const n=Math.max(8,Math.min(64,Number(ask("পাসওয়ার্ড কত অক্ষরের? (8–64)","16"))||16));
+      const chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*";
+      const bytes=new Uint32Array(n);
+      crypto.getRandomValues(bytes);
+      result=Array.from(bytes,b=>chars[b%chars.length]).join("");
+      break;
+    }
+    case "text":{
+      const s=ask("আপনার লেখা লিখুন:");
+      if(s===null)return;
+      result=`★ ${s} ★\n꧁༺ ${s} ༻꧂\n『 ${s} 』\n✦ ${s} ✦`;
+      break;
+    }
+    case "case":{
+      const s=ask("লেখা লিখুন:");
+      if(s===null)return;
+      result=`UPPERCASE: ${s.toUpperCase()}\n lowercase: ${s.toLowerCase()}`;
+      break;
+    }
+    case "url":{
+      const s=ask("লেখা বা URL লিখুন:");
+      if(s===null)return;
+      result=`Encoded: ${encodeURIComponent(s)}\nDecoded: ${decodeURIComponent(s.replace(/\+/g," "))}`;
+      break;
+    }
+    case "base64":{
+      const s=ask("Base64 encode করতে E, decode করতে D লিখুন:","E");
+      if(s===null)return;
+      const v=ask("যে লেখা রূপান্তর করবেন:");
+      if(v===null)return;
+      try{
+        result=s.toLowerCase()==="d"?decodeURIComponent(escape(atob(v))):btoa(unescape(encodeURIComponent(v)));
+      }catch(e){result="রূপান্তর করা যায়নি। ইনপুট যাচাই করুন।"}
+      break;
+    }
+    case "date":
+      result=new Date().toLocaleString();
+      break;
+    case "length":{
+      const n=Number(ask("মিটার লিখুন:","1"));
+      if(!Number.isFinite(n))return;
+      result=`${n} মিটার = ${n*100} সেন্টিমিটার\n${n} মিটার = ${n*1000} মিলিমিটার\n${n} মিটার = ${(n*3.28084).toFixed(4)} ফুট`;
+      break;
+    }
+    case "weight":{
+      const n=Number(ask("কিলোগ্রাম লিখুন:","1"));
+      if(!Number.isFinite(n))return;
+      result=`${n} kg = ${n*1000} g\n${n} kg = ${(n*2.20462).toFixed(3)} lb`;
+      break;
+    }
+    case "temp":{
+      const n=Number(ask("সেলসিয়াস তাপমাত্রা লিখুন:","25"));
+      if(!Number.isFinite(n))return;
+      result=`Fahrenheit: ${(n*9/5+32).toFixed(2)} °F\nKelvin: ${(n+273.15).toFixed(2)} K`;
+      break;
+    }
+    case "percent":{
+      const a=Number(ask("মোট সংখ্যা লিখুন:","100"));
+      const b=Number(ask("শতকরা হার লিখুন:","10"));
+      if(!Number.isFinite(a)||!Number.isFinite(b))return;
+      result=`ফলাফল: ${(a*b/100).toFixed(2)}`;
+      break;
+    }
+    case "calc":{
+      const a=Number(ask("প্রথম সংখ্যা:","10"));
+      const op=ask("অপারেশন লিখুন: +, -, *, /","+");
+      const b=Number(ask("দ্বিতীয় সংখ্যা:","5"));
+      if(!Number.isFinite(a)||!Number.isFinite(b))return;
+      if(op==="+")result=a+b;
+      else if(op==="-")result=a-b;
+      else if(op==="*")result=a*b;
+      else if(op==="/"&&b!==0)result=a/b;
+      else result="অপারেশনটি সঠিক নয়।";
+      break;
+    }
+    case "color":{
+      result="#"+Array.from(crypto.getRandomValues(new Uint8Array(3)),b=>b.toString(16).padStart(2,"0")).join("").toUpperCase();
+      break;
+    }
+    case "json":{
+      const s=ask("JSON লিখুন:");
+      if(s===null)return;
+      try{result=JSON.stringify(JSON.parse(s),null,2)}
+      catch(e){result="Invalid JSON";}
+      break;
+    }
+    case "find":{
+      const s=ask("মূল লেখা লিখুন:");
+      if(s===null)return;
+      const q=ask("যে শব্দ খুঁজবেন:");
+      if(q===null)return;
+      result=`"${q}" পাওয়া গেছে: ${s.split(q).length-1} বার`;
+      break;
+    }
+    case "speech":{
+      const s=ask("যে লেখা শুনতে চান:");
+      if(s===null)return;
+      if(!("speechSynthesis" in window)){result="এই ব্রাউজারে Speech সমর্থিত নয়।";break}
+      speechSynthesis.cancel();
+      speechSynthesis.speak(new SpeechSynthesisUtterance(s));
+      result="লেখা পড়ে শোনানো হচ্ছে।";
+      break;
+    }
+    case "image":{
+      const file=document.createElement("input");
+      file.type="file";file.accept="image/*";
+      file.onchange=()=>{
+        if(file.files[0]){
+          const url=URL.createObjectURL(file.files[0]);
+          output.innerHTML="";
+          const img=document.createElement("img");
+          img.src=url;img.alt="Selected image";
+          img.style.cssText="max-width:100%;max-height:300px;border-radius:12px;margin-top:12px";
+          output.appendChild(img);
+        }
+      };
+      file.click();return;
+    }
+    case "qr":{
+      const s=ask("QR কোডে যে লেখা বা URL থাকবে:");
+      if(s===null)return;
+      output.innerHTML="";
+      const img=document.createElement("img");
+      img.alt="QR code";
+      img.width=220;img.height=220;
+      img.style.cssText="display:block;margin:12px auto;border-radius:12px;background:white;padding:8px";
+      img.src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(s);
+      output.appendChild(img);
+      const note=document.createElement("p");
+      note.textContent="QR তৈরির জন্য বাহ্যিক অনলাইন সার্ভিস ব্যবহার করা হচ্ছে।";
+      note.className="notice";
+      output.appendChild(note);
+      return;
+    }
+    default:
+      result="এই টুলের ফিচার পরে যুক্ত করতে হবে।";
+  }
+  output.textContent=String(result);
+}
+
+renderTools();
+</script>
+</body>
+</html>
